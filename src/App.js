@@ -2,26 +2,26 @@
 // 项目的根组件
 // App -> index.js -> public/index.html(root)
 
-const count = 100;
+const articleType = 3;
 
-function getName() {
-  return 'jack'
+// 定义核心函数 （根据文章类型返回不同的JSX模板）
+
+function getArticleTem(){
+  if(articleType ==0){
+    return <div>我是无图文章</div>
+  } else if(articleType ==1){
+    return <div>我是单图模式</div>
+  } else {
+     return <div>我是三图模式</div>
+  }
 }
 
-const list = [
-  {id:1001, name:"Vue"},
-  {id:1002, name:"React"},
-  {id:1003, name:"Angular"}
-]
 
 function App() {
   return (
     <div className="App">
-      this is App
-     {/* 渲染列表 */}
-     <ul>
-       {list.map(item=> <li key={item.id}>{item.name}</li>)}
-     </ul>
+     {/* 调用函数渲染不同的模板 */}
+     {getArticleTem()}
     </div>
   );
 }
