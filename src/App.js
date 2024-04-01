@@ -1,13 +1,18 @@
 
-// 项目的根组件
+// 定义组件
 // App -> index.js -> public/index.html(root)
+const Button = () =>{
+  //业务逻辑组件逻辑
+  return <button>click me!</button>
+}
 function App() {
-  const handleClick = (name,e) =>{
-    console.log('button被点击了',name,e)
-  }
   return (
     <div className="App">
-      <button onClick={(e)=>handleClick('jack',e)}>click me</button>
+      {/* 使用组件 （渲染组件) */}
+      {/* 自闭合 */}
+      <Button/>
+      <Button></Button>
+      
     
     </div>
   )
