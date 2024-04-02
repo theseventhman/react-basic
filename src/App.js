@@ -1,37 +1,22 @@
+// 受控指定表单
 
-// 定义组件
-// App -> index.js -> public/index.html(root)
-// useState 实现一个计数器按钮
-import { useState } from "react";
-function App() {
-  // 1.调用 useState添加一个状态变量
-  // count 状态变量
-  // setCount 修改装填变量的方法
-  const[count,setCount] = useState(0)
+import {useState} from 'react'
 
-  // 2. 点击事件回调
-  const handleClick = () =>{
-    // 作用: 1.用传入的值修改count
-    // 2.重新使用新的count渲染UI
-    setCount(count+1)
-  }
+// 1. 声明一个react状态 - useState
 
-  // 修改对象状态
-  const[form,setForm] = useState({name:'jack'})
+// 2. 核心绑定流程
+// 1. 通过value属性绑定react状态
+// 2. 绑定onChange事件 通过事件参数e拿到输入框最新的值 反向修改到react状态
 
-  const changeForm =() =>{
-    setForm({
-      ...form,
-      name: 'john'
-    })
-  }
-
-  return (
-    <div className="App">
-     <button onClick={handleClick}>{count}</button>
-     <button onClick={changeForm}>修改Form{form.name}</button>
+function App(){
+  const[value, setValue] = useState('')
+  return(
+    <div>
+      <input value = {value}
+      onChange={(e) => setValue(e.target.value)}
+      type="text"/>
     </div>
   )
 }
 
-export default App;
+export default App
