@@ -1,22 +1,19 @@
-// 受控指定表单
+// 父传子
+// 1.父组件传递数据 子组件标签身上绑定属性
 
-import {useState} from 'react'
-
-// 1. 声明一个react状态 - useState
-
-// 2. 核心绑定流程
-// 1. 通过value属性绑定react状态
-// 2. 绑定onChange事件 通过事件参数e拿到输入框最新的值 反向修改到react状态
+function Son(props){
+  // props: 对象里面包含了父组件传递过来的所有的数据
+  return <div>this is son, {props.name}</div>
+}
 
 function App(){
-  const[value, setValue] = useState('')
-  return(
+  const name = 'this is app name'
+  return (
     <div>
-      <input value = {value}
-      onChange={(e) => setValue(e.target.value)}
-      type="text"/>
+      <Son name={name}/>
     </div>
   )
 }
+
 
 export default App
