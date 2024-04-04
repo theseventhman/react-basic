@@ -1,88 +1,49 @@
-// // 1. 通过子传父 A -> App
-// // 2. 通过父传子 App -> B
-
-import { useContext } from "react"
-
-const { createContext } = require("react")
-
-// import { useState } from 'react'
-
-
-// function A({onGetAName}){
-//   // Son组件中的数据
-//   const name= 'this is name'
-//   return (
-//     <div>
-//       this is A component,
-//       <button onClick={() =>{
-//         onGetAName(name)
-//       }}>send</button>
-//     </div>
-//   )
-// }
-
-// function B({name}){
-//   return (
-//     <div>
-//       this is B component,
-//       {name}
-//     </div>
-//   )
-// }
+// import { useEffect,useState } from "react";
 
 // function App(){
-//   const[name,setName] = useState('')
-//   const getAName = (name) =>{
-//     console.log(name)
-//     setName(name)
-//   }
+//   // 1. 没有依赖项 初始+组件更新
+//   const[count,setCount] = useState(0)
+//   useEffect(() =>{
+//     console.log('副作用函数执行了')
+//   },[count])
+
 //   return (
 //     <div>
-//       this is App
-//       <A onGetAName={getAName}/>
-//       <B name={name}/>
+//       this is app
+//       <button onClick={() => setCount(count+1)}>{count}</button>
 //     </div>
 //   )
+
 // }
 
 // export default App
 
-// 使用context实现跨层通信
-// App -> A -> B
+//清除副作用
+import { useEffect,useState } from "react";
 
-// 1. createContext方法创建一个上下文对象
+function Son(){
+  //1.渲染时开启一个定时器
+  useEffect(()=>{
+    const timer = setInterval(() => {
+      console.log('定时器执行中')
+    }, 1000)
+  
 
-const MsgContext = createContext() 
-
-// 2. 在顶层组件 通过provider组件提供数据
-// 3. 在底层组件 通过useContext钩子函数使用数据
-
-function A() {
-  return (
-    <div>
-      this is A component
-      <B/>
-    </div>
-  )
+  return () =>{
+    // 清除副作用（组件卸载时）
+    clearInterval(timer)
+  }
+},[])
+  return <div>this is son</div>
 }
 
-function B() {
-  const msg = useContext(MsgContext)
+function App(){
+  // 通过条件渲染模拟组件卸载
+  const[show, setShow] = useState(true)
   return (
     <div>
-      this is B component, {msg}
-    </div>
-  )
-}
-
-function App() {
-  const msg = 'this is app msg'
-  return (
-    <div>
-      <MsgContext.Provider value={msg}>
-        this is App
-        <A/>
-      </MsgContext.Provider>
+      {show && <Son/>}
+      <button onClick={() => setShow(false)}>卸载Son组件</button>
     </div>
   )
 }
